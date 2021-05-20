@@ -1,8 +1,7 @@
 import debounce from 'lodash.debounce';
-
-// !!!
-// НЕ СМОГ ПОДКЛЮЧИТЬ PNotify... Подскажите, пожалуйста, в чем ошибка. Спасибо
-// import PNotify from '.../node_modules/@pnotify/core/dist/PNotify.js';
+import { error } from '@pnotify/core';
+import '@pnotify/core/dist/PNotify.css';
+import '@pnotify/core/dist/BrightTheme.css';
 
 import countryIndicatedTpl from '../templates/country-indicated.hbs';
 import countryListTpl from '../templates/country-list.hbs';
@@ -22,10 +21,9 @@ refs.countryInputField.addEventListener(
         refs.countryListRoot.innerHTML = '';
         if (response.length > 10) {
           console.log(response.length);
-          throw new Error('Too many matches found. Please enter a more specific query!');
-          // PNotify.error({
-          //   text: 'Too many matches found. Please enter a more specific query!',
-          // });
+          return error({
+            text: 'Too many matches found. Please enter a more specific query!',
+          });
         } else if (response.length > 1) {
           const murkupCountries = countryListTpl(response);
 
